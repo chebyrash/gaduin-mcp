@@ -1,0 +1,31 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.gaduin/gaduin",
+  "title": "Gaduin",
+  "description": "Read-only flight, train, airport and chokepoint status plus prediction markets on transport delays.",
+  "websiteUrl": "https://gaduin.com/agents",
+  "icons": [
+    {
+      "src": "https://gaduin.com/apple-touch-icon.png",
+      "mimeType": "image/png",
+      "sizes": [
+        "180x180"
+      ]
+    }
+  ],
+  "version": "0.3.0",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://gaduin.com/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Optional. Only the account tools (positions, balance) need it, as Bearer <api-key>; every other tool is public. All tools are read-only.",
+          "isRequired": false,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}
