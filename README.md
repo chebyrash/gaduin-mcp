@@ -186,7 +186,7 @@ Server version 0.3.0 adds six prompts for clients that support MCP prompts:
 
 ## REST data API
 
-The same flight, rail and shipping data is also available as a keyed REST API, separate from this server: <https://gaduin.com/docs/api>.
+The same flight, rail and shipping data is also available as a keyed REST API, separate from this server: <https://gaduin.com/docs/api>. Runnable curl, JavaScript and Python examples: <https://github.com/chebyrash/gaduin-api-examples>.
 
 ## Support
 
