@@ -1,0 +1,10 @@
+{
+  "name": "gaduin",
+  "version": "0.3.0",
+  "description": "Live flight, airport, train station, port and ship chokepoint status, plus transport prediction markets. Read-only; no key needed.",
+  "mcpServers": {
+    "gaduin": {
+      "httpUrl": "https://gaduin.com/mcp"
+    }
+  }
+}

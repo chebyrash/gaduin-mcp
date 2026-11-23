@@ -1,6 +1,6 @@
 # GADUIN MCP connector
 
-Remote, read-only [Model Context Protocol](https://modelcontextprotocol.io) server for live transport status: flights, airports, airlines, train stations, maritime chokepoints, and prediction markets on transport outcomes.
+Remote, read-only [Model Context Protocol](https://modelcontextprotocol.io) server for live transport status: flights and aircraft positions, airports, airlines, train stations and trains, ports, maritime chokepoints, and prediction markets on transport outcomes.
 
 > **This repository holds connector metadata and installation docs only.** It is not the server's source code. The server is hosted by GADUIN at the URL below; there is nothing to clone, build or run locally.
 
@@ -8,7 +8,7 @@ Remote, read-only [Model Context Protocol](https://modelcontextprotocol.io) serv
 |---|---|
 | Endpoint | `https://gaduin.com/mcp` |
 | Transport | Streamable HTTP |
-| Access | Read-only. 12 public tools work with no key and no sign-in. |
+| Access | Read-only. 28 public tools work with no key and no sign-in. |
 | Optional auth | `Authorization: Bearer <api-key>` unlocks 2 account tools (positions, balance). Get a key at <https://gaduin.com/account/ai>. |
 | Metadata | [`server.json`](server.json) (MCP registry descriptor) |
 | Website | <https://gaduin.com/agents> |
@@ -85,6 +85,24 @@ Set `"type": "streamableHttp"` explicitly; Cline treats a remote entry without `
 cline mcp add gaduin https://gaduin.com/mcp --transport http --yes
 ```
 
+### Gemini CLI
+
+This repository is a [Gemini CLI extension](https://geminicli.com/docs/extensions/) ([`gemini-extension.json`](gemini-extension.json)):
+
+```bash
+gemini extensions install https://github.com/chebyrash/gaduin-mcp
+```
+
+Or add the server to `~/.gemini/settings.json` yourself:
+
+```json
+{
+  "mcpServers": {
+    "gaduin": { "httpUrl": "https://gaduin.com/mcp" }
+  }
+}
+```
+
 ### Other MCP clients
 
 Any client that supports remote Streamable HTTP servers can use `https://gaduin.com/mcp` directly. To check the endpoint from a terminal:
@@ -104,15 +122,31 @@ All tools are read-only.
 
 | Tool | What it returns |
 |---|---|
-| `get_flight_status` | Live status of a flight by number (e.g. `BA117`): times in UTC and local time, delay, last update, link to its page. |
-| `get_flight_history` | How often a flight ran late over the last 30 days: on-time, late and cancelled counts. |
-| `search_flights` | Today's departures from an airport still to leave, optionally to one destination or on one airline. |
-| `get_airline_stats` | An airline's last 30 days: on-time share, cancellations, diversions, median and 90th-percentile delay. |
+| `get_flight_status` | Current status of a flight by number (e.g. `BA117`): times in UTC and local time, delay, last update, link to its page. |
+| `get_flight_history` | How often a flight ran late over the last 30 days (or up to 400): on-time, late and cancelled counts. |
+| `search_flights` | An airport's departures on record for a local day, optionally to one destination or on one airline. |
+| `get_airline_stats` | An airline's last 30 days on record: on-time share, cancellations, diversions, median and 90th-percentile delay. |
+| `list_flight_disruptions` | Flights on record that are cancelled or late now. |
+| `get_flight_position` | Where a flight is now: latitude, longitude, altitude, speed and course of the aircraft flying it. |
+| `get_flight_track` | Every position recorded for a flight on one service date, from departure to arrival. |
+| `get_aircraft_position` | The latest position on record for one aircraft, by its ICAO 24-bit address. |
+| `get_aircraft_track` | Every position recorded for one aircraft in a window of up to 6 hours. |
+| `list_aircraft_in_area` | Every aircraft whose latest position lies inside a box and is at most 180 seconds old. |
+| `get_observed_flights` | The flights of one UTC date as read off aircraft position reports under the flight's callsign. |
 | `get_airport_status` | How an airport is running today: status, disruption score, delayed and cancelled shares for departures and arrivals. |
 | `list_disrupted_airports` | Today's most disrupted airports, worst first. |
-| `get_station_board` | Live departures and arrivals at a railway station by name or code: times, platform, status, delay. |
-| `list_chokepoints` | Every maritime chokepoint with a published daily ship count, furthest below normal first. |
+| `get_airport_departures` | One page of an airport's departures on record for one local day. |
+| `get_airport_arrivals` | One page of an airport's arrivals on record for one local day. |
+| `list_airport_movements` | Landings or takeoffs observed at an airport in one local day, as time intervals. |
+| `get_station_board` | Departures and arrivals at a railway station by name or code: times, platform, status, delay. |
+| `search_stations` | Railway stations by name or public code. |
+| `get_train_status` | Every run of a train number on one service date, with every calling point. |
+| `get_rail_punctuality` | Arrival punctuality of one operator, station or route. |
+| `list_chokepoints` | Every maritime chokepoint with a published daily ship count, lowest share of normal first. |
 | `get_chokepoint_status` | Ship traffic through one chokepoint: recent daily mean against normal, weekly and daily counts. |
+| `list_ports` | Every port whose own published list of vessel arrivals and departures is read. |
+| `get_port_board` | One port-local day of a port's movement list: each vessel arrival and departure as the port lists it. |
+| `get_vessel_port_calls` | One vessel's port calls, by IMO number, newest first. |
 | `list_markets` | Prediction markets on transport outcomes, filtered by status, category and free text. |
 | `get_market` | One market: question, settlement rule, outcomes with current prices, status. |
 | `get_market_price_history` | How a market's prices moved over its life. |
@@ -145,8 +179,14 @@ Server version 0.3.0 adds six prompts for clients that support MCP prompts:
 - "Which flights from MAD to Lisbon are still to leave today?"
 - "Which airports are most disrupted right now?"
 - "Are trains running late at London Paddington?"
+- "Where is flight BA117 right now?"
+- "Which ships arrived at the port of Piraeus today?"
 - "How does ship traffic through the Suez Canal compare with normal?"
 - "Which prediction markets are open on flights from JFK?"
+
+## REST data API
+
+The same flight, rail and shipping data is also available as a keyed REST API, separate from this server: <https://gaduin.com/docs/api>.
 
 ## Support
 
