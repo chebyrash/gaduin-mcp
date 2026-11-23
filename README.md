@@ -105,7 +105,7 @@ Or add the server to `~/.gemini/config/mcp_config.json` yourself:
 
 ### Gemini CLI (legacy)
 
-Antigravity CLI has replaced Gemini CLI for most users. For Gemini CLI, this repository is also an [extension](https://geminicli.com/docs/extensions/) ([`gemini-extension.json`](gemini-extension.json)):
+Google replaced Gemini CLI with Antigravity CLI for unpaid-tier and Google One users in June 2026. For Gemini CLI, this repository is also an [extension](https://geminicli.com/docs/extensions/) ([`gemini-extension.json`](gemini-extension.json)):
 
 ```bash
 gemini extensions install https://github.com/chebyrash/gaduin-mcp
