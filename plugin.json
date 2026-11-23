@@ -1,0 +1,16 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "gaduin",
+  "displayName": "GADUIN",
+  "version": "0.3.0",
+  "description": "Live flight, airport, train station, port and ship chokepoint status, plus transport prediction markets. Read-only; no key or sign-in needed.",
+  "logo": "logo.png",
+  "suggestedPrompts": [
+    "Is flight BA117 delayed today, and how often has it been late this month?",
+    "How does ship traffic through the Strait of Hormuz compare with normal?",
+    "Are trains running late at London Paddington?"
+  ],
+  "homepage": "https://gaduin.com/agents",
+  "repository": "https://github.com/chebyrash/gaduin-mcp",
+  "keywords": ["flights", "flight-status", "airports", "trains", "shipping", "ports", "transport"]
+}

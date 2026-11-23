@@ -85,9 +85,27 @@ Set `"type": "streamableHttp"` explicitly; Cline treats a remote entry without `
 cline mcp add gaduin https://gaduin.com/mcp --transport http --yes
 ```
 
-### Gemini CLI
+### Google Antigravity (App, CLI, IDE)
 
-This repository is a [Gemini CLI extension](https://geminicli.com/docs/extensions/) ([`gemini-extension.json`](gemini-extension.json)):
+This repository is an [Antigravity plugin](https://antigravity.google/docs/plugins) ([`plugin.json`](plugin.json), [`mcp_config.json`](mcp_config.json)):
+
+```bash
+agy plugin install https://github.com/chebyrash/gaduin-mcp
+```
+
+Or add the server to `~/.gemini/config/mcp_config.json` yourself:
+
+```json
+{
+  "mcpServers": {
+    "gaduin": { "serverUrl": "https://gaduin.com/mcp" }
+  }
+}
+```
+
+### Gemini CLI (legacy)
+
+Antigravity CLI has replaced Gemini CLI for most users. For Gemini CLI, this repository is also an [extension](https://geminicli.com/docs/extensions/) ([`gemini-extension.json`](gemini-extension.json)):
 
 ```bash
 gemini extensions install https://github.com/chebyrash/gaduin-mcp
